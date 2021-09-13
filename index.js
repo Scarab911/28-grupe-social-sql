@@ -208,6 +208,9 @@ app.init = async () => {
     await searchPost('nice');
     await searchPost('lol');
 
+    //**7** _Isspausdinti naujausia vartotojo post'a. Visa tai turi buti funkcijos pavydale, kuri gauna vieninteli parametra - vartotojo id. Jei vartotojas neturi parases nei vieno post'o, grazinti atitinkama pranesima_
+
+
 }
 
 app.init();
