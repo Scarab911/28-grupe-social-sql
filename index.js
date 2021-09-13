@@ -163,7 +163,7 @@ app.init = async () => {
 
     sql = 'SELECT `like_options`.`id`, `like_options`.`text`,\
                     `posts_likes`.`like_option_id`, \
-                    COUNT(`like_options`.`id`) as panaudota\
+                    COUNT(`posts_likes`.`like_option_id`) as panaudota\
             FROM `like_options`\
             LEFT JOIN `posts_likes`\
                 ON `posts_likes`.`like_option_id` = `like_options`.`id`\
@@ -175,6 +175,7 @@ app.init = async () => {
     console.log(`Like options statistics:`);
     count = 0;
     for (let { text, panaudota } of rows) {
+
         console.log(`${++count}. ${text} - ${panaudota} time;`);
     }
 }
