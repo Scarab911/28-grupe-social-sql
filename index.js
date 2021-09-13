@@ -124,6 +124,8 @@ app.init = async () => {
     [rows] = await connection.execute(sql);
 
     console.log('');
+    console.log(`Ona's feed:`);
+
     for (let { firstname, text, date } of rows) {
         console.log(`--${capitalize(firstname)} wrote a post "${text}"(${date})`);
     }
@@ -133,7 +135,29 @@ app.init = async () => {
 
     //**4** _Isspausdinti, kas kokius draugus stebi (visi vartotojai)_
 
+    sql = 'SELECT `user_id`,\
+    `friend_id`,\
+     `follow_date` as date,\
+      (\
+        SELECT `users`.`firstname`\
+         FROM `users`\
+          WHERE `users`.`id` = `friends`.`friend_id`\
+          ) as friendName,\
+          (\
+            SELECT `users`.`firstname`\
+             FROM `users`\
+              WHERE `users`.`id` = `friends`.`user_id`\
+              ) as me\
+               FROM `friends`';
 
+    [rows] = await connection.execute(sql);
+
+    console.log('');
+    console.log(`User's relationships:`);
+    count = 0;
+    for (let { me, friendName, date } of rows) {
+        console.log(`${++count}. ${capitalize(me)} is following ${capitalize(friendName)} (since ${date});`);
+    }
 }
 
 app.init();
