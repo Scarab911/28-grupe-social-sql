@@ -197,7 +197,7 @@ app.init = async () => {
         if (rows === []) {
             console.error(`ERROR:Tokio komentaro nera`);
         } else {
-            console.log(`Comments with search term "nice":`);
+            console.log(`Comments with search term "${str}":`);
             count = 0;
             for (let { text, date } of rows) {
                 console.log(`${++count}. "${text}" (${formatDate(date)});`);
@@ -206,6 +206,7 @@ app.init = async () => {
     };
     console.log('');
     await searchPost('nice');
+    await searchPost('lol');
 
 }
 
