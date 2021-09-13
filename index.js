@@ -194,7 +194,7 @@ app.init = async () => {
 
         [rows] = await connection.execute(sql);
 
-        if (rows === []) {
+        if (rows.length === 0) { //tikrinam ar array tuscias
             console.error(`ERROR:Tokio komentaro nera`);
         } else {
             console.log(`Comments with search term "${str}":`);
