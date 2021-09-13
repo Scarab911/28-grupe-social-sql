@@ -158,6 +158,25 @@ app.init = async () => {
     for (let { me, friendName, date } of rows) {
         console.log(`${++count}. ${capitalize(me)} is following ${capitalize(friendName)} (since ${date});`);
     }
+
+    //**5** _Koks yra like'u naudojamumas. Isrikiuoti nuo labiausiai naudojamo_
+
+    sql = 'SELECT `like_options`.`id`, `like_options`.`text`,\
+                    `posts_likes`.`like_option_id`, \
+                    COUNT(`like_options`.`id`) as panaudota\
+            FROM `like_options`\
+            LEFT JOIN `posts_likes`\
+                ON `posts_likes`.`like_option_id` = `like_options`.`id`\
+            GROUP BY `like_options`.`id`\
+            ORDER BY `panaudota` DESC';
+
+    [rows] = await connection.execute(sql);
+    console.log('');
+    console.log(`Like options statistics:`);
+    count = 0;
+    for (let { text, panaudota } of rows) {
+        console.log(`${++count}. ${text} - ${panaudota} time;`);
+    }
 }
 
 app.init();
