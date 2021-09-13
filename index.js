@@ -17,6 +17,13 @@ app.init = async () => {
         return str[0].toUpperCase() + str.slice(1)
     };
 
+    function formatDate(date) {
+        const d = new Date(date);
+        const dformat = [d.getFullYear(), d.getMonth() + 1, d.getDate()].join('-') + ' ' +
+            [d.getHours(), d.getMinutes(), d.getSeconds()].join(':');
+        return dformat;
+    }
+
     //LOGIC BELOW
 
     //**1** _Registruotu vartotoju sarasas, isrikiuotas nuo naujausio link seniausio. Reikia nurodyti varda, post'u kieki, komentaru kieki ir like'u kieki_
@@ -127,7 +134,7 @@ app.init = async () => {
     console.log(`Ona's feed:`);
 
     for (let { firstname, text, date } of rows) {
-        console.log(`--${capitalize(firstname)} wrote a post "${text}"(${date})`);
+        console.log(`--${capitalize(firstname)} wrote a post "${text}"(${formatDate(date)})`);
     }
 
     // ** 3 ** _Visu irasu(posts) sarasas su komentarais ir like'ais_
@@ -156,7 +163,7 @@ app.init = async () => {
     console.log(`User's relationships:`);
     count = 0;
     for (let { me, friendName, date } of rows) {
-        console.log(`${++count}. ${capitalize(me)} is following ${capitalize(friendName)} (since ${date});`);
+        console.log(`${++count}. ${capitalize(me)} is following ${capitalize(friendName)} (since ${formatDate(date)});`);
     }
 
     //**5** _Koks yra like'u naudojamumas. Isrikiuoti nuo labiausiai naudojamo_
@@ -178,6 +185,28 @@ app.init = async () => {
 
         console.log(`${++count}. ${text} - ${panaudota} time;`);
     }
+
+    //**6** _Isspausdinti visus komentarus, kuriuose yra nurodytas paieskos tekstas. Jei nieko nerasta, tai parodyti atitinkama pranesima. Visa tai turi buti funkcijos pavydale, kuri gauna vieninteli parametra - paieskos fraze_
+
+    async function searchPost(str) {
+
+        sql = 'SELECT * FROM `comments` WHERE `text` LIKE "%' + str + '%"';
+
+        [rows] = await connection.execute(sql);
+
+        if (rows === []) {
+            console.error(`ERROR:Tokio komentaro nera`);
+        } else {
+            console.log(`Comments with search term "nice":`);
+            count = 0;
+            for (let { text, date } of rows) {
+                console.log(`${++count}. "${text}" (${formatDate(date)});`);
+            }
+        }
+    };
+    console.log('');
+    await searchPost('nice');
+
 }
 
 app.init();

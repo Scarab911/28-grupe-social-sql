@@ -5,6 +5,7 @@
 Sukurti duombaze pavadinimu "social".
 
 Importuoti duotas lenteles, tokiu eiliskumu:
+
 - users
 - like_options
 - friends
@@ -57,7 +58,7 @@ pvz.:
 
 ```
 User's relationships:
-1. Vardenis is following Vardenis (since 2021-09-09 20:18:45); 
+1. Vardenis is following Vardenis (since 2021-09-09 20:18:45);
 2. Vardenis is following Vardenis (since 2021-09-09 20:18:45);
 3. Vardenis is following Vardenis (since 2021-09-09 20:18:45);
 ```
@@ -72,4 +73,14 @@ Like options statistics:
 2. Wow - 3 time;
 3. Angry - 2 time;
 4. Yay - 0 time;
+```
+
+**6** _Isspausdinti visus komentarus, kuriuose yra nurodytas paieskos tekstas. Jei nieko nerasta, tai parodyti atitinkama pranesima. Visa tai turi buti funkcijos pavydale, kuri gauna vieninteli parametra - paieskos fraze_
+
+pvz.:
+
+```
+Comments with search term "nice":
+1. "This is nice!" (2021-09-09 20:18:45);
+2. "Nice one!" (2021-09-09 20:18:45);
 ```
